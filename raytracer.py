@@ -12,17 +12,17 @@ class RayTracer(object):
         self.current_color = setColor(1, 1, 1)
     
     def clear(self):
-        self.frambuffer = [
+        self.framebuffer = [
             [self.clear_color for x in range(self.width)]
             for y in range(self.height)
         ]
     
     def point(self, x, y, c = None):
         if y >= 0 and y < self.height and x > 0 and x < self.width:
-            self.frambuffer[y][x] = c or self.current_color
+            self.framebuffer[y][x] = c or self.current_color
 
     def write(self, filename):
-        glFinish(filename)
+        Render.glFinish(self, filename)
 
     def cast_ray(self, origin, direction):
         s = Sphere(V3(-3, 0, 16), 2)
@@ -43,10 +43,10 @@ class RayTracer(object):
 
                 direction = V3(i, j, -1).norm()
                 origin = V3(0, 0, 0)
-                c = cast_ray(origin, direction)
+                c = self.cast_ray(origin, direction)
 
 r = RayTracer(800, 600)
 r.clear()
 r.point(100, 100)
 r.render()
-r.write
+r.write('Sphere.bmp')
