@@ -79,12 +79,15 @@ class RayTracer(object):
 
 red = Material(difusse=setColor(1, 0, 0))
 white = Material(difusse=setColor(1, 1, 1))
+orange = Material(difusse=setColor(1, 0.5, 0))
 
-r = RayTracer(800, 600)
+r = RayTracer(1024, 1024)
 r.light = Light(V3(0, 0, 0), 1)
 r.scene = [
-    Sphere(V3(-3, 0, -16), 2, red),
-    Sphere(V3(-2.8, -2, -10), 2, white)
+    Sphere(V3(0, -0.9, -8), 0.4, orange),
+    Sphere(V3(0, -1, -9), 1.3, white),
+    Sphere(V3(0, 1, -10), 1.7, white),
+    Sphere(V3(0, 3, -11), 2, white)
 ]
 r.render()
-r.write('Sphere.bmp')
+r.write('RT1.bmp')
