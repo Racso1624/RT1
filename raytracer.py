@@ -10,6 +10,7 @@ class RayTracer(object):
         self.height = height
         self.clear_color = setColor(0, 0, 0)
         self.current_color = setColor(1, 1, 1)
+        self.clear()
     
     def clear(self):
         self.framebuffer = [
@@ -30,7 +31,7 @@ class RayTracer(object):
         if s.ray_intersect(origin, direction):
             return setColor(1, 0, 0)
         else:
-            self.clear_color
+            return self.clear_color
 
     def render(self):
         fov = int(pi/2)
@@ -41,12 +42,10 @@ class RayTracer(object):
                 i = ((2 * (x + 0.5) / self.width) - 1) * ar * tana
                 j = (1 - (2 * (y + 0.5) / self.height)) * tana
 
-                direction = V3(i, j, -1).norm()
+                direction = V3(i, j, -1)
                 origin = V3(0, 0, 0)
-                c = self.cast_ray(origin, direction)
+                self.framebuffer[y][x] = self.cast_ray(origin, direction)
 
-r = RayTracer(800, 600)
-r.clear()
-r.point(100, 100)
+r = RayTracer(1000, 1000)
 r.render()
 r.write('Sphere.bmp')
